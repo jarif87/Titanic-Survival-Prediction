@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Titanic Survival Prediction</title>
+    <link href='https://fonts.googleapis.com/css?family=Cinzel|Arimo' rel='stylesheet' type='text/css'>
+    <style>
+        body {
+            font-family: 'Arimo', sans-serif;
+            background-image: url('/templates/image.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: rgba(255, 140, 0, 0.9); /* Dark orange background color */
+            padding: 20px;
+            border: 2px solid #ccc;
+            border-radius: 6px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            font-family: 'Cinzel', serif;
+            color: #333;
+            text-align: center;
+            font-size: 36px;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        input[type="number"], select {
+            width: 100%;
+            padding: 12px;
+            font-size: 18px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+        }
+        button[type="submit"] {
+            width: 100%;
+            padding: 12px;
+            font-size: 18px;
+            background-color: #FF8C00; /* Dark orange button color */
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        button[type="submit"]:hover {
+            background-color: #FFA500; /* Lighter orange color on hover */
+        }
+        .result {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 20px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Titanic Survival Prediction</h1>
+        <form action="{{ url_for('predict') }}" method="post">
+            <div class="form-group">
+                <label for="Pclass">Passenger Class:</label>
+                <input type="number" id="Pclass" name="Pclass" placeholder="Enter Passenger Class" min="1" max="3" required>
+            </div>
+            <div class="form-group">
+                <label for="Sex">Sex:</label>
+                <select id="Sex" name="Sex" required>
+                    <option value="1">Male</option>
+                    <option value="0">Female</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="Age">Age:</label>
+                <input type="number" id="Age" name="Age" placeholder="Enter Age" min="0" step="0.1" required>
+            </div>
+            <div class="form-group">
+                <label for="SibSp">Number of Siblings/Spouses Aboard:</label>
+                <input type="number" id="SibSp" name="SibSp" placeholder="Enter Number of Siblings/Spouses Aboard" min="0" required>
+            </div>
+            <div class="form-group">
+                <label for="Parch">Number of Parents/Children Aboard:</label>
+                <input type="number" id="Parch" name="Parch" placeholder="Enter Number of Parents/Children Aboard" min="0" required>
+            </div>
+            <div class="form-group">
+                <label for="Fare">Fare:</label>
+                <input type="number" id="Fare" name="Fare" placeholder="Enter Fare" min="0" step="0.01" required>
+            </div>
+            <div class="form-group">
+                <label for="Cabin">Cabin:</label>
+                <input type="number" id="Cabin" name="Cabin" placeholder="Enter Cabin" min="0">
+            </div>
+            <div class="form-group">
+                <label for="Embarked">Embarked:</label>
+                <select id="Embarked" name="Embarked" required>
+                    <option value="0">Southampton (S)</option>
+                    <option value="1">Cherbourg (C)</option>
+                    <option value="2">Queenstown (Q)</option>
+                </select>
+            </div>
+            <button type="submit">Predict</button>
+        </form>
+        {% if prediction is defined %}
+        <div class="result">
+            {% if prediction == 1 %}
+            <p>Passenger survived</p>
+            {% else %}
+            <p>Passenger did not survive</p>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
